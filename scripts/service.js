@@ -43,6 +43,8 @@ function showAlert(){
     }
 }
 
+
+
 // Using date restrictions on datepicker
 // Document of datepicker is here: https://api.jqueryui.com/datepicker/ 
 // The following code shows how to set specific dates to exclude, as well as Sundays (Day 0)
@@ -50,13 +52,26 @@ function showAlert(){
 var unavailableDates = ["06/29/2020","07/07/2020","07/10/2020"]
 const setDateFormat = "mm/dd/yy";
 
+
 function disableDates(date) {
+    var day = date.getDay();
     // Sunday is Day 0, disable all Sundays
     if (date.getDay() == 0)
         return [false];
+
+    var selected = document.getElementById('pros');
+    var opt = selected.options[selected.selectedIndex];
+    console.log(opt.text);
+    if(opt.text == "New Talent: Whitney"){
+       return [(day != 1 && day != 2 && day != 3)];
+    }
+    else if(opt.text == "Expert: Courtenay"){
+        return[(day != 5 && day != 6)];
+    }
     var string = jQuery.datepicker.formatDate(setDateFormat, date);
     return [ unavailableDates.indexOf(string) == -1 ]
 }
+
 
 
 // HERE, JQuery "LISTENING" starts
